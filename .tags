@@ -1,0 +1,52 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	0	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+name	/home/geo/github/difile/package.json	/^  "name": "difile",$/;"	function	line:2
+main	/home/geo/github/difile/package.json	/^  "main": ".\/lib\/difile",$/;"	function	line:3
+version	/home/geo/github/difile/package.json	/^  "version": "0.0.0",$/;"	function	line:4
+description	/home/geo/github/difile/package.json	/^  "description": "A short description of your package",$/;"	function	line:5
+keywords	/home/geo/github/difile/package.json	/^  "keywords": [$/;"	function	line:6
+activationCommands	/home/geo/github/difile/package.json	/^  "activationCommands": {$/;"	function	line:8
+atom-workspace	/home/geo/github/difile/package.json	/^    "atom-workspace": "difile:toggle"$/;"	function	line:9
+repository	/home/geo/github/difile/package.json	/^  "repository": "https:\/\/github.com\/atom\/difile",$/;"	function	line:11
+license	/home/geo/github/difile/package.json	/^  "license": "MIT",$/;"	function	line:12
+engines	/home/geo/github/difile/package.json	/^  "engines": {$/;"	function	line:13
+atom	/home/geo/github/difile/package.json	/^    "atom": ">=1.0.0 <2.0.0"$/;"	function	line:14
+dependencies	/home/geo/github/difile/package.json	/^  "dependencies": {$/;"	function	line:16
+Difile	/home/geo/github/difile/spec/difile-spec.coffee	/^describe "Difile", ->$/;"	function	line:8
+when the difile:toggle event is triggered	/home/geo/github/difile/spec/difile-spec.coffee	/^  describe "when the difile:toggle event is triggered", ->$/;"	function	line:15
+hides and shows the modal panel	/home/geo/github/difile/spec/difile-spec.coffee	/^    it "hides and shows the modal panel", ->$/;"	function	line:16
+hides and shows the view	/home/geo/github/difile/spec/difile-spec.coffee	/^    it "hides and shows the view", ->$/;"	function	line:39
+DifileView	/home/geo/github/difile/spec/difile-view-spec.coffee	/^describe "DifileView", ->$/;"	function	line:3
+has one valid test	/home/geo/github/difile/spec/difile-view-spec.coffee	/^  it "has one valid test", ->$/;"	function	line:4
+0.1.0 - First Release	/home/geo/github/difile/CHANGELOG.md	/^## 0.1.0 - First Release$/;"	function	line:1
+DifileView	/home/geo/github/difile/lib/difile-view.coffee	/^class DifileView$/;"	function	line:2
+constructor	/home/geo/github/difile/lib/difile-view.coffee	/^  constructor: (serializedState) ->$/;"	function	line:3
+serialize	/home/geo/github/difile/lib/difile-view.coffee	/^  serialize: ->$/;"	function	line:15
+destroy	/home/geo/github/difile/lib/difile-view.coffee	/^  destroy: ->$/;"	function	line:18
+getElement	/home/geo/github/difile/lib/difile-view.coffee	/^  getElement: ->$/;"	function	line:21
+activate	/home/geo/github/difile/lib/difile.coffee	/^  activate: (state) ->$/;"	function	line:9
+deactivate	/home/geo/github/difile/lib/difile.coffee	/^  deactivate: ->$/;"	function	line:19
+serialize	/home/geo/github/difile/lib/difile.coffee	/^  serialize: ->$/;"	function	line:24
+toggle	/home/geo/github/difile/lib/difile.coffee	/^  toggle: ->$/;"	function	line:27
+difile package	/home/geo/github/difile/README.md	/^# difile package$/;"	function	line:1
+# Keybindings require three things to be fully defined	/home/geo/github/difile/keymaps/difile.cson	/^# Keybindings require three things to be fully defined: A selector that is$/;"	function	line:1
+# https	/home/geo/github/difile/keymaps/difile.cson	/^# https:\/\/atom.io\/docs\/latest\/behind-atom-keymaps-in-depth$/;"	function	line:9
+atom-workspace	/home/geo/github/difile/keymaps/difile.cson	/^'atom-workspace':$/;"	function	line:10
+ctrl-alt-o	/home/geo/github/difile/keymaps/difile.cson	/^  'ctrl-alt-o': 'difile:toggle'$/;"	function	line:11
+.difile	/home/geo/github/difile/styles/difile.less	/^.difile {$/;"	function	line:7
+# See https	/home/geo/github/difile/menus/difile.cson	/^# See https:\/\/atom.io\/docs\/latest\/hacking-atom-package-word-count#menus for more details$/;"	function	line:1
+context-menu	/home/geo/github/difile/menus/difile.cson	/^'context-menu':$/;"	function	line:2
+atom-text-editor	/home/geo/github/difile/menus/difile.cson	/^  'atom-text-editor': [$/;"	function	line:3
+label	/home/geo/github/difile/menus/difile.cson	/^      'label': 'Toggle difile'$/;"	function	line:5
+command	/home/geo/github/difile/menus/difile.cson	/^      'command': 'difile:toggle'$/;"	function	line:6
+menu	/home/geo/github/difile/menus/difile.cson	/^'menu': [$/;"	function	line:9
+label	/home/geo/github/difile/menus/difile.cson	/^    'label': 'Packages'$/;"	function	line:11
+submenu	/home/geo/github/difile/menus/difile.cson	/^    'submenu': [$/;"	function	line:12
+label	/home/geo/github/difile/menus/difile.cson	/^      'label': 'difile'$/;"	function	line:13
+submenu	/home/geo/github/difile/menus/difile.cson	/^      'submenu': [$/;"	function	line:14
+label	/home/geo/github/difile/menus/difile.cson	/^          'label': 'Toggle'$/;"	function	line:16
+command	/home/geo/github/difile/menus/difile.cson	/^          'command': 'difile:toggle'$/;"	function	line:17
