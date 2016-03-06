@@ -10,6 +10,7 @@ module.exports = Difile =
   activate: (state) ->
     console.log "activating"
     @difileView = new DifileView(state.difileViewState)
+    @bListView = new BranchListView(state.difileViewState)
     @modalPanel = atom.workspace.addModalPanel(item: @difileView.getElement(), visible: false)
 
     # Events subscribed to in atom's system can be easily cleaned up with a CompositeDisposable
@@ -17,6 +18,7 @@ module.exports = Difile =
 
     # Register command that toggles this view
     @subscriptions.add atom.commands.add 'atom-workspace', 'difile:toggle': => @toggle()
+    @subscriptions.add atom.commands.add 'atom-workspace', 'difile:branch-list': => @toggle_branch_list()
 
   deactivate: ->
     @modalPanel.destroy()
@@ -26,6 +28,8 @@ module.exports = Difile =
   serialize: ->
     difileViewState: @difileView.serialize()
 
+  toggle_branch_list: ->
+    @bListView.toggle_display()
+
   toggle: ->
-    console.log 'Difile was toggled!'
-    @bListView = new BranchListView()
+    @bListView.toggle_display()
