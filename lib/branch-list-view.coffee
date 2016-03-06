@@ -19,7 +19,7 @@ class BranchListView extends SelectListView
       @display()
 
   display: ->
-    repo_path = atom.project.rootDirectories[0].path
+    repo_path = atom.workspace.getActiveTextEditor().project.rootDirectories[0].path
     exec "git branch | cut -c 3-", cwd: repo_path, (err, stdout, stderr) =>
       if(err != null)
         throw err;
@@ -27,6 +27,7 @@ class BranchListView extends SelectListView
       @setItems lines
 
     @panel.show()
+    @focusFilterEditor()
 
   remove: ->
     @panel.hide()
@@ -36,4 +37,4 @@ class BranchListView extends SelectListView
 
   confirmed: (item) ->
     console.log("#{item} was selected")
-    @panel.destroy()
+    @panel.hide()
