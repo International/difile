@@ -1,4 +1,6 @@
 {SelectListView} = require 'atom-space-pen-views'
+exec = require("child_process").exec
+os = require("os")
 
 module.exports =
 class BranchListView extends SelectListView
@@ -17,9 +19,14 @@ class BranchListView extends SelectListView
       @display()
 
   display: ->
-    @setItems ["Hello", "World"]
+    repo_path = atom.project.rootDirectories[0].path
+    exec "git branch | cut -c 3-", cwd: repo_path, (err, stdout, stderr) =>
+      if(err != null)
+        throw err;
+      lines = stdout.split(os.EOL).filter (l) -> l != ""
+      @setItems lines
+
     @panel.show()
-    # @focusFilterEditor()
 
   remove: ->
     @panel.hide()
