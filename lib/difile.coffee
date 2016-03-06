@@ -1,4 +1,3 @@
-DifileView = require './difile-view'
 {CompositeDisposable} = require 'atom'
 BranchListView = require "./branch-list-view"
 
