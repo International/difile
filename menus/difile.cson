@@ -15,7 +15,12 @@
         {
           'label': 'Toggle'
           'command': 'difile:toggle'
-        }
+        },
+        {
+          'label': 'Branch List'
+          'command': 'difile:branch-list'
+        },
+
       ]
     ]
   }
