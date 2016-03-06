@@ -2,7 +2,13 @@ exec = require("child_process").exec
 
 module.exports =
   repoPath: ->
-    atom.workspace.getActiveTextEditor().project.rootDirectories[0].path
+    project = atom.project
+    path = atom.workspace.getActiveTextEditor()?.getPath()
+    dir = project.getDirectories().filter((d) -> d.contains(path))[0]
+    if dir
+      dir.path
+    else
+      throw "No dir found"
 
   currentFileProjectPath: ->
     repoPath = @repoPath()
