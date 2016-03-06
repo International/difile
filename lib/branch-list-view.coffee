@@ -1,9 +1,9 @@
 {SelectListView} = require 'atom-space-pen-views'
-exec = require("child_process").exec
 os = require("os")
 Path = require("path")
 fs = require("fs")
 {CompositeDisposable} = require 'atom'
+helpers = require "./helpers"
 
 module.exports =
 class BranchListView extends SelectListView
@@ -19,16 +19,8 @@ class BranchListView extends SelectListView
     else
       @display()
 
-  repo_path: ->
-    atom.workspace.getActiveTextEditor().project.rootDirectories[0].path
-
-  current_file_project_path: ->
-    repo_path = @repo_path()
-    full_file_path = atom.workspace.getActiveTextEditor().getPath()
-    full_file_path.replace(repo_path, "").substring(1)
-
   display: ->
-    exec "git branch | cut -c 3-", cwd: @repo_path(), (err, stdout, stderr) =>
+    helpers.execFromCurrent "git branch | cut -c 3-", (err, stdout, stderr) =>
       if(err != null)
         throw err;
       lines = stdout.split(os.EOL).filter (l) -> l != ""
@@ -44,9 +36,9 @@ class BranchListView extends SelectListView
     "<li>#{item}</li>"
 
   confirmed: (item) ->
-    diffPath = Path.join(@repo_path(), "difile.diff")
-    project_path = @current_file_project_path()
-    exec "git diff #{item} #{project_path}", cwd: @repo_path(), (err, stdout, stderr) =>
+    diffPath = Path.join(helpers.repoPath(), "difile.diff")
+    projectPath = helpers.currentFileProjectPath()
+    helpers.execFromCurrent "git diff #{item} #{projectPath}", (err, stdout, stderr) =>
       if(err != null)
         throw err;
       fs.writeFile diffPath, stdout, (err) =>
