@@ -29,6 +29,8 @@ class BranchListView extends SelectListView
     @panel.show()
     @focusFilterEditor()
 
+  cancelled: -> @panel.hide()
+
   remove: ->
     @panel.hide()
 
