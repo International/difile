@@ -20,4 +20,4 @@ module.exports = Difile =
     difileViewState: @bListView.serialize()
 
   toggle: ->
-    @bListView.toggle_display()
+    @bListView.toggleDisplay()

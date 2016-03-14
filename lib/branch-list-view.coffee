@@ -13,7 +13,7 @@ class BranchListView extends SelectListView
     @addClass('overlay from-top')
     @panel = atom.workspace.addModalPanel(item: this, visible: false)
 
-  toggle_display: ->
+  toggleDisplay: ->
     if @panel?.isVisible()
       @remove()
     else
