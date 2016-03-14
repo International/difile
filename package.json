@@ -5,7 +5,7 @@
   "description": "Diff your files, against their version on other branches",
   "keywords": [
   ],
-  "repository": "https://github.com/atom/difile",
+  "repository": "https://github.com/International/difile",
   "license": "MIT",
   "engines": {
     "atom": ">=1.0.0 <2.0.0"
