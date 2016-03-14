@@ -2,7 +2,7 @@
   "name": "difile",
   "main": "./lib/difile",
   "version": "0.0.0",
-  "description": "A short description of your package",
+  "description": "Diff your files, against their version on other branches",
   "keywords": [
   ],
   "repository": "https://github.com/atom/difile",
@@ -11,6 +11,6 @@
     "atom": ">=1.0.0 <2.0.0"
   },
   "dependencies": {
-    "atom-space-pen-views": "latest"
+    "atom-space-pen-views": "2.2.0"
   }
 }
