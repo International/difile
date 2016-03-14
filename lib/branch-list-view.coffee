@@ -11,7 +11,7 @@ class BranchListView extends SelectListView
     super
     @disposables = new CompositeDisposable
     @addClass('overlay from-top')
-    @panel = atom.workspace.addModalPanel(item: this)
+    @panel = atom.workspace.addModalPanel(item: this, visible: false)
 
   toggle_display: ->
     if @panel?.isVisible()

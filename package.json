@@ -5,9 +5,6 @@
   "description": "A short description of your package",
   "keywords": [
   ],
-  "activationCommands": {
-    "atom-workspace": "difile:toggle"
-  },
   "repository": "https://github.com/atom/difile",
   "license": "MIT",
   "engines": {
