@@ -43,9 +43,13 @@ class BranchListView extends SelectListView
     helpers.execFromCurrent "git diff #{item} #{projectPath}", (err, stdout, stderr) =>
       if(err != null)
         throw err;
-      fs.writeFile diffPath, stdout, (err) =>
-        if err != null
-          throw err
-        atom.workspace.open(diffPath).then (textEditor) =>
-          @disposables.add textEditor.onDidDestroy -> fs.unlink diffPath
+      if stdout == ""
         @panel.hide()
+        window.alert "No changes!"
+      else
+        fs.writeFile diffPath, stdout, (err) =>
+          if err != null
+            throw err
+          atom.workspace.open(diffPath).then (textEditor) =>
+            @disposables.add textEditor.onDidDestroy -> fs.unlink diffPath
+          @panel.hide()
