@@ -1,10 +1,9 @@
 {
   "name": "difile",
   "main": "./lib/difile",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Diff your files, against their version on other branches",
-  "keywords": [
-  ],
+  "keywords": [],
   "repository": "https://github.com/International/difile",
   "license": "MIT",
   "engines": {
