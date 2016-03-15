@@ -38,7 +38,7 @@ class BranchListView extends SelectListView
     "<li>#{item}</li>"
 
   confirmed: (item) ->
-    diffPath = Path.join(helpers.repoPath(), "difile.diff")
+    diffPath = Path.join(helpers.repoPath(), ".git/difile.diff")
     projectPath = helpers.currentFileProjectPath()
     helpers.execFromCurrent "git diff #{item} #{projectPath}", (err, stdout, stderr) =>
       if(err != null)
