@@ -4,6 +4,7 @@ Path = require("path")
 fs = require("fs")
 {CompositeDisposable} = require 'atom'
 helpers = require "./helpers"
+_ = require "lodash"
 
 module.exports =
 class BranchListView extends SelectListView
@@ -32,6 +33,11 @@ class BranchListView extends SelectListView
       if(err != null)
         throw err
       lines = stdout.split(os.EOL).filter (l) -> l != ""
+      masterBranch = "master"
+      masterBranchEntry = _.remove(lines, (l) -> l == masterBranch)
+      lines = lines.sort()
+      if masterBranchEntry.length != 0
+        lines.unshift masterBranch
       @setItems lines
 
     @panel.show()

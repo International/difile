@@ -1,3 +1,6 @@
+## 0.2.3
+* Master branch added as first entry in select view
+
 ## 0.2.2
 * Started implementing tests, removed calls to nonexisting functions in deactivate
 

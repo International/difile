@@ -42,6 +42,14 @@ describe "BranchListView", ->
         expect(mrc.args[0]).toEqual("git difftool devel some.file")
         expect(typeof(mrc.args[1])).toEqual("function")
 
+    it 'should place master branch first', ->
+      spyOn(window, 'alert')
+      spyOn(@view, 'setItems').andCallFake (itemz) ->
+        expect(itemz).toEqual(["master","branch1", "branch2"])
+      spyOn(helpers, 'execFromCurrent').andCallFake (cmd, callback) ->
+        callback(null, "branch1\nmaster\nbranch2", "")
+      @view.display()
+
     it 'should show an alert if stdout content is the same', ->
       spyOn(window, 'alert')
       spyOn(helpers, 'execFromCurrent').andCallFake (cmd, callback) ->
