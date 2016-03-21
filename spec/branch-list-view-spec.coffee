@@ -6,7 +6,8 @@ child_process = require("child_process")
 {
   pathToRepoFile,
   textEditor,
-  panel
+  panel,
+  repoPath
 } = require './atom_objects'
 
 describe "BranchListView", ->
@@ -18,7 +19,7 @@ describe "BranchListView", ->
 
   describe 'view specs', ->
     it 'should trigger a diff by default', ->
-      spyOn(helpers, 'repoPath').andReturn "/home/geo/github/difile"
+      spyOn(helpers, 'repoPath').andReturn repoPath
       spyOn(atom.workspace, 'getActiveTextEditor').andReturn textEditor
       spyOn(helpers, 'execFromCurrent')
 
