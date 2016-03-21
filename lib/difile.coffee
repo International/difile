@@ -13,9 +13,7 @@ module.exports = Difile =
     @subscriptions.add atom.commands.add 'atom-workspace', 'difile:difftool-toggle': => @diffToolToggle()
 
   deactivate: ->
-    @modalPanel.destroy()
     @subscriptions.dispose()
-    @bListView.destroy()
 
   serialize: ->
     difileViewState: @bListView.serialize()

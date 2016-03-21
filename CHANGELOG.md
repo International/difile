@@ -1,3 +1,6 @@
+## 0.2.2
+* Started implementing tests, removed calls to nonexisting functions in deactivate
+
 ## 0.2.1
 * Added option for launching difftool ( default binding alt-a )
 

@@ -1,5 +1,7 @@
 Difile = require '../lib/difile'
-
+BranchListView = require '../lib/branch-list-view'
+helpers = require '../lib/helpers'
+child_process = require("child_process")
 # Use the command `window:run-package-specs` (cmd-alt-ctrl-p) to run specs.
 #
 # To run a specific `it` or `describe` block add an `f` to the front (e.g. `fit`
@@ -12,51 +14,33 @@ describe "Difile", ->
     workspaceElement = atom.views.getView(atom.workspace)
     activationPromise = atom.packages.activatePackage('difile')
 
-  describe "when the difile:toggle event is triggered", ->
-    it "hides and shows the modal panel", ->
-      # Before the activation event the view is not on the DOM, and no panel
-      # has been created
-      expect(workspaceElement.querySelector('.difile')).not.toExist()
+  class PathWrapper
+    constructor: (@path) ->
+    contains: (str) ->
+      ///#{@path}///.exec(str.path) != null
 
-      # This is an activation event, triggering it will cause the package to be
-      # activated.
+  pathToRepoFile = new PathWrapper("some.file")
+
+  panel =
+    show: -> undefined
+
+  textEditor =
+    getPath: -> pathToRepoFile
+    getURI: -> pathToRepoFile
+    onDidDestroy: (@destroy) ->
+      dispose: ->
+    onDidSave: (@save) ->
+      dispose: -> undefined
+
+  describe "when triggering difile:toggle", ->
+    it "should populate the select view with branches", ->
+      spyOn(atom.workspace, 'addModalPanel').andReturn(panel)
+      spyOn(atom.workspace, 'getActiveTextEditor').andReturn textEditor
+      spyOn(atom.project, 'getDirectories').andReturn [pathToRepoFile]
+      spyOn(helpers, 'execFromCurrent').andCallFake (cmd, callback) ->
+        callback(null, "master\ndevel")
+
+      spyOn(BranchListView.prototype, 'runDiff').andCallFake
+      spyOn(BranchListView.prototype, 'setItems').andCallFake (itemz) ->
+        expect(itemz).toEqual(["master","devel"])
       atom.commands.dispatch workspaceElement, 'difile:toggle'
-
-      waitsForPromise ->
-        activationPromise
-
-      runs ->
-        expect(workspaceElement.querySelector('.difile')).toExist()
-
-        difileElement = workspaceElement.querySelector('.difile')
-        expect(difileElement).toExist()
-
-        difilePanel = atom.workspace.panelForItem(difileElement)
-        expect(difilePanel.isVisible()).toBe true
-        atom.commands.dispatch workspaceElement, 'difile:toggle'
-        expect(difilePanel.isVisible()).toBe false
-
-    it "hides and shows the view", ->
-      # This test shows you an integration test testing at the view level.
-
-      # Attaching the workspaceElement to the DOM is required to allow the
-      # `toBeVisible()` matchers to work. Anything testing visibility or focus
-      # requires that the workspaceElement is on the DOM. Tests that attach the
-      # workspaceElement to the DOM are generally slower than those off DOM.
-      jasmine.attachToDOM(workspaceElement)
-
-      expect(workspaceElement.querySelector('.difile')).not.toExist()
-
-      # This is an activation event, triggering it causes the package to be
-      # activated.
-      atom.commands.dispatch workspaceElement, 'difile:toggle'
-
-      waitsForPromise ->
-        activationPromise
-
-      runs ->
-        # Now we can test for view visibility
-        difileElement = workspaceElement.querySelector('.difile')
-        expect(difileElement).toBeVisible()
-        atom.commands.dispatch workspaceElement, 'difile:toggle'
-        expect(difileElement).not.toBeVisible()

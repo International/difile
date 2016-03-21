@@ -30,7 +30,7 @@ class BranchListView extends SelectListView
   display: ->
     helpers.execFromCurrent "git branch | cut -c 3-", (err, stdout, stderr) =>
       if(err != null)
-        throw err;
+        throw err
       lines = stdout.split(os.EOL).filter (l) -> l != ""
       @setItems lines
 
