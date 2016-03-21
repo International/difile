@@ -20,22 +20,31 @@ describe "BranchListView", ->
     @view.setItems(["devel", "master"])
     spyOn(helpers, 'repoPath').andReturn repoPath
     spyOn(atom.workspace, 'getActiveTextEditor').andReturn textEditor
-    spyOn(helpers, 'execFromCurrent')
-
 
   describe 'view specs', ->
-    it 'should trigger a diff by default', ->
-      @view.confirmSelection()
+    describe 'compare modes', ->
+      beforeEach ->
+        spyOn(helpers, 'execFromCurrent')
 
-      mrc = helpers.execFromCurrent.mostRecentCall
-      expect(mrc.args.length).toEqual(2)
-      expect(mrc.args[0]).toEqual("git diff devel some.file")
-      expect(typeof(mrc.args[1])).toEqual("function")
+      it 'should trigger a diff by default', ->
+        @view.confirmSelection()
 
-    it 'should trigger a difftool by default', ->
-      @view.setCompareMode(BranchListView.DIFFTOOL)
+        mrc = helpers.execFromCurrent.mostRecentCall
+        expect(mrc.args.length).toEqual(2)
+        expect(mrc.args[0]).toEqual("git diff devel some.file")
+        expect(typeof(mrc.args[1])).toEqual("function")
+
+      it 'should trigger a difftool by default', ->
+        @view.setCompareMode(BranchListView.DIFFTOOL)
+        @view.confirmSelection()
+        mrc = helpers.execFromCurrent.mostRecentCall
+        expect(mrc.args.length).toEqual(2)
+        expect(mrc.args[0]).toEqual("git difftool devel some.file")
+        expect(typeof(mrc.args[1])).toEqual("function")
+
+    it 'should show an alert if stdout content is the same', ->
+      spyOn(window, 'alert')
+      spyOn(helpers, 'execFromCurrent').andCallFake (cmd, callback) ->
+        callback(null, "", "")
       @view.confirmSelection()
-      mrc = helpers.execFromCurrent.mostRecentCall
-      expect(mrc.args.length).toEqual(2)
-      expect(mrc.args[0]).toEqual("git difftool devel some.file")
-      expect(typeof(mrc.args[1])).toEqual("function")
+      expect(window.alert).toHaveBeenCalledWith("No changes!")
