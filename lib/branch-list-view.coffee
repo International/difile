@@ -7,11 +7,19 @@ helpers = require "./helpers"
 
 module.exports =
 class BranchListView extends SelectListView
+  @DIFF = "diff"
+  @DIFFTOOL = "difftool"
+
   constructor: (serializedState) ->
     super
+    @actionToTake = BranchListView.DIFF
+
     @disposables = new CompositeDisposable
     @addClass('overlay from-top')
     @panel = atom.workspace.addModalPanel(item: this, visible: false)
+
+  setCompareMode: (action) ->
+    @actionToTake = action
 
   toggleDisplay: ->
     if @panel?.isVisible()
@@ -37,12 +45,11 @@ class BranchListView extends SelectListView
   viewForItem: (item) ->
     "<li>#{item}</li>"
 
-  confirmed: (item) ->
+  runDiff: (branch, currentFilePath) ->
     diffPath = Path.join(helpers.repoPath(), ".git/difile.diff")
-    projectPath = helpers.currentFileProjectPath()
-    helpers.execFromCurrent "git diff #{item} #{projectPath}", (err, stdout, stderr) =>
+    helpers.execFromCurrent "git diff #{branch} #{currentFilePath}", (err, stdout, stderr) =>
       if(err != null)
-        throw err;
+        throw err
       if stdout == ""
         @panel.hide()
         window.alert "No changes!"
@@ -53,3 +60,19 @@ class BranchListView extends SelectListView
           atom.workspace.open(diffPath).then (textEditor) =>
             @disposables.add textEditor.onDidDestroy -> fs.unlink diffPath
           @panel.hide()
+
+  runAction: (branchName, currentFilePath) ->
+    if @actionToTake == BranchListView.DIFF
+      @runDiff(branchName, currentFilePath)
+    else
+      @runDiffTool(branchName, currentFilePath)
+
+  runDiffTool: (branchName, currentFilePath) ->
+    @panel.hide()
+    helpers.execFromCurrent "git difftool #{branchName} #{currentFilePath}", (err, stdout, stderr) =>
+      if(err != null)
+        throw err
+
+  confirmed: (branchName) ->
+    currentFilePath = helpers.currentFileProjectPath()
+    @runAction(branchName, currentFilePath)

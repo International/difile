@@ -10,6 +10,7 @@ module.exports = Difile =
     @subscriptions = new CompositeDisposable
     # Register command that toggles this view
     @subscriptions.add atom.commands.add 'atom-workspace', 'difile:toggle': => @toggle()
+    @subscriptions.add atom.commands.add 'atom-workspace', 'difile:difftool-toggle': => @diffToolToggle()
 
   deactivate: ->
     @modalPanel.destroy()
@@ -19,5 +20,10 @@ module.exports = Difile =
   serialize: ->
     difileViewState: @bListView.serialize()
 
+  diffToolToggle: ->
+    @bListView.setCompareMode(BranchListView.DIFFTOOL)
+    @bListView.toggleDisplay()
+
   toggle: ->
+    @bListView.setCompareMode(BranchListView.DIFF)
     @bListView.toggleDisplay()
