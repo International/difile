@@ -3,7 +3,7 @@
   "main": "./lib/difile",
   "version": "0.2.6",
   "description": "Diff your files, against their version on other branches",
-  "keywords": [],
+  "keywords": ["git","diff"],
   "repository": "https://github.com/International/difile",
   "license": "MIT",
   "engines": {
