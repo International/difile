@@ -1,3 +1,6 @@
+## 0.2.5
+* Removed cut and lodash
+
 ## 0.2.4
 * Handle case when file does not exist in the branch
 
