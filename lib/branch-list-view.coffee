@@ -29,10 +29,10 @@ class BranchListView extends SelectListView
       @display()
 
   display: ->
-    helpers.execFromCurrent "git branch | cut -c 3-", (err, stdout, stderr) =>
+    helpers.execFromCurrent "git branch", (err, stdout, stderr) =>
       if(err != null)
         throw err
-      lines = stdout.split(os.EOL).filter (l) -> l != ""
+      lines = stdout.split(os.EOL).filter((l) -> l != "").map((l) -> l.substring(2))
       masterBranch = "master"
       masterBranchEntry = _.remove(lines, (l) -> l == masterBranch)
       lines = lines.sort()

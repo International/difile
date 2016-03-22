@@ -47,7 +47,7 @@ describe "BranchListView", ->
       spyOn(@view, 'setItems').andCallFake (itemz) ->
         expect(itemz).toEqual(["master","branch1", "branch2"])
       spyOn(helpers, 'execFromCurrent').andCallFake (cmd, callback) ->
-        callback(null, "branch1\nmaster\nbranch2", "")
+        callback(null, "  branch1\n* master\n  branch2", "")
       @view.display()
 
     it 'should show an alert in the case of unknown revision or path not in the working tree', ->

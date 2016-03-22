@@ -22,7 +22,7 @@ describe "Difile", ->
       spyOn(atom.workspace, 'getActiveTextEditor').andReturn textEditor
       spyOn(atom.project, 'getDirectories').andReturn [pathToRepoFile]
       spyOn(helpers, 'execFromCurrent').andCallFake (cmd, callback) ->
-        callback(null, "master\ndevel")
+        callback(null, "* master\n  devel")
 
       spyOn(BranchListView.prototype, 'setItems').andCallFake (itemz) ->
         expect(itemz).toEqual(["master","devel"])
