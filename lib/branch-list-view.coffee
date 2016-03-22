@@ -34,9 +34,17 @@ class BranchListView extends SelectListView
         throw err
       lines = stdout.split(os.EOL).filter((l) -> l != "").map((l) -> l.substring(2))
       masterBranch = "master"
-      masterBranchEntry = _.remove(lines, (l) -> l == masterBranch)
+      haveMaster = false
+      counter = 0
+      while counter < lines.length
+        line = lines[counter]
+        if line == masterBranch
+          lines.splice(counter,1)
+          haveMaster = true
+          break
+        counter += 1
       lines = lines.sort()
-      if masterBranchEntry.length != 0
+      if haveMaster != 0
         lines.unshift masterBranch
       @setItems lines
 
