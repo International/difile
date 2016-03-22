@@ -1,3 +1,6 @@
+## 0.2.6
+* Removed require lodash from code
+
 ## 0.2.5
 * Removed cut and lodash
 

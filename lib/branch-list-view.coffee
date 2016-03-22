@@ -4,7 +4,6 @@ Path = require("path")
 fs = require("fs")
 {CompositeDisposable} = require 'atom'
 helpers = require "./helpers"
-_ = require "lodash"
 
 module.exports =
 class BranchListView extends SelectListView
