@@ -1,3 +1,6 @@
+## 0.2.4
+* Handle case when file does not exist in the branch
+
 ## 0.2.3
 * Master branch added as first entry in select view
 

@@ -50,6 +50,19 @@ describe "BranchListView", ->
         callback(null, "branch1\nmaster\nbranch2", "")
       @view.display()
 
+    it 'should show an alert in the case of unknown revision or path not in the working tree', ->
+      git_err_string="""
+Uncaught Error: Command failed: /bin/sh -c git diff master db/migrate/my_gration.rb
+fatal: ambiguous argument 'db/migrate/my_gration.rb': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+      """
+      spyOn(window, 'alert')
+      spyOn(helpers, 'execFromCurrent').andCallFake (cmd, callback) ->
+        callback(git_err_string, "", git_err_string)
+      @view.confirmSelection()
+      expect(window.alert).toHaveBeenCalledWith("Unknown revision or path not in the working tree!")
+
     it 'should show an alert if stdout content is the same', ->
       spyOn(window, 'alert')
       spyOn(helpers, 'execFromCurrent').andCallFake (cmd, callback) ->

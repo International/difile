@@ -55,7 +55,12 @@ class BranchListView extends SelectListView
     diffPath = Path.join(helpers.repoPath(), ".git/difile.diff")
     helpers.execFromCurrent "git diff #{branch} #{currentFilePath}", (err, stdout, stderr) =>
       if(err != null)
-        throw err
+        if not /unknown revision or path not in the working tree/.exec(err.toString())
+          throw err
+        else
+          @panel.hide()
+          window.alert "Unknown revision or path not in the working tree!"
+          return
       if stdout == ""
         @panel.hide()
         window.alert "No changes!"
