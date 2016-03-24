@@ -10,3 +10,4 @@
 'atom-workspace':
   'alt-q': 'difile:toggle'
   'alt-a': 'difile:difftool-toggle'
+  'alt-z': 'difile:custom-diff-toggle'

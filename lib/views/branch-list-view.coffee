@@ -3,29 +3,30 @@ os = require("os")
 Path = require("path")
 fs = require("fs")
 {CompositeDisposable} = require 'atom'
-helpers = require "./helpers"
+helpers = require "../helpers"
 
 module.exports =
 class BranchListView extends SelectListView
   @DIFF = "diff"
+  @DIFF_WITH_CUSTOM_VIEW = "diff_html_view"
   @DIFFTOOL = "difftool"
 
-  constructor: (serializedState) ->
+  constructor: (serializedState, compareMode = BranchListView.DIFF) ->
     super
-    @actionToTake = BranchListView.DIFF
+    @setCompareMode compareMode
 
     @disposables = new CompositeDisposable
     @addClass('overlay from-top')
     @panel = atom.workspace.addModalPanel(item: this, visible: false)
 
   setCompareMode: (action) ->
-    @actionToTake = action
+    @compareMode = action
 
-  toggleDisplay: ->
-    if @panel?.isVisible()
-      @remove()
-    else
-      @display()
+    switch @compareMode
+      when BranchListView.DIFF, BranchListView.DIFF_WITH_CUSTOM_VIEW
+        @confirmedCb = @runDiff
+      when BranchListView.DIFFTOOL
+        @confirmedCb = @runDiffTool
 
   display: ->
     helpers.execFromCurrent "git branch", (err, stdout, stderr) =>
@@ -72,15 +73,18 @@ class BranchListView extends SelectListView
         @panel.hide()
         window.alert "No changes!"
       else
-        fs.writeFile diffPath, stdout, (err) =>
-          if err != null
-            throw err
-          atom.workspace.open(diffPath).then (textEditor) =>
-            @disposables.add textEditor.onDidDestroy -> fs.unlink diffPath
-          @panel.hide()
+        if @compareMode == BranchListView.DIFF
+          fs.writeFile diffPath, stdout, (err) =>
+            if err != null
+              throw err
+            atom.workspace.open(diffPath).then (textEditor) =>
+              @disposables.add textEditor.onDidDestroy -> fs.unlink diffPath
+        else
+          @onDiffOutput(currentFilePath, stdout)
+        @panel.hide()
 
   runAction: (branchName, currentFilePath) ->
-    if @actionToTake == BranchListView.DIFF
+    if @compareMode == BranchListView.DIFF
       @runDiff(branchName, currentFilePath)
     else
       @runDiffTool(branchName, currentFilePath)
@@ -91,6 +95,9 @@ class BranchListView extends SelectListView
       if(err != null)
         throw err
 
+  onConfirmed: (@confirmedCb) ->
+  onDiffOutput: (@onDiffOutput) ->
+
   confirmed: (branchName) ->
     currentFilePath = helpers.currentFileProjectPath()
-    @runAction(branchName, currentFilePath)
+    @confirmedCb(branchName, currentFilePath)

@@ -1,5 +1,8 @@
 # difile package
 
-Package providing options for diffing files, against their version on other branches. Source code inspired by [git-plus](https://github.com/akonwi/git-plus)
+Package providing options for diffing files, against their version on other branches.
+Source code inspired from [git-plus](https://github.com/akonwi/git-plus), and  [html-tab](https://github.com/mark-hahn/html-tab).
 
-![A screenshot of your package](https://f.cloud.github.com/assets/69169/2290250/c35d867a-a017-11e3-86be-cd7c5bf3ff9b.gif)
+
+# about
+I made this package for personal use. I'd love to hear from you if you use this package, or you'd like to see some features in it. Contributions welcome :)

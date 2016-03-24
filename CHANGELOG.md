@@ -1,3 +1,6 @@
+## 0.3.0
+* added new view for html viewing of the diff, without git +/- markers
+
 ## 0.2.6
 * Removed require lodash from code
 

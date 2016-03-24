@@ -1,27 +1,32 @@
 {CompositeDisposable} = require 'atom'
-BranchListView = require "./branch-list-view"
+BranchListView = require "./views/branch-list-view"
+DiffTab = require "./diff-tab"
 
 module.exports = Difile =
   subscriptions: null
 
   activate: (state) ->
-    @bListView = new BranchListView(state.difileViewState)
     # Events subscribed to in atom's system can be easily cleaned up with a CompositeDisposable
     @subscriptions = new CompositeDisposable
     # Register command that toggles this view
     @subscriptions.add atom.commands.add 'atom-workspace', 'difile:toggle': => @toggle()
     @subscriptions.add atom.commands.add 'atom-workspace', 'difile:difftool-toggle': => @diffToolToggle()
+    @subscriptions.add atom.commands.add 'atom-workspace', 'difile:custom-diff-toggle': => @customDiffToggle()
 
   deactivate: ->
     @subscriptions.dispose()
 
   serialize: ->
-    difileViewState: @bListView.serialize()
+    difileViewState: {}
 
   diffToolToggle: ->
-    @bListView.setCompareMode(BranchListView.DIFFTOOL)
-    @bListView.toggleDisplay()
+    new BranchListView({}, BranchListView.DIFFTOOL).display()
+
+  customDiffToggle: ->
+    br = new BranchListView({}, BranchListView.DIFF_WITH_CUSTOM_VIEW)
+    br.onDiffOutput (filePath, output) ->
+      atom.workspace.getActivePane().activateItem(new DiffTab("HTML Diff: #{filePath}",output))
+    br.display()
 
   toggle: ->
-    @bListView.setCompareMode(BranchListView.DIFF)
-    @bListView.toggleDisplay()
+    new BranchListView({}, BranchListView.DIFF).display()

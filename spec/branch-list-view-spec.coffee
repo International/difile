@@ -1,5 +1,5 @@
 Difile = require '../lib/difile'
-BranchListView = require '../lib/branch-list-view'
+BranchListView = require '../lib/views/branch-list-view'
 helpers = require '../lib/helpers'
 child_process = require("child_process")
 
