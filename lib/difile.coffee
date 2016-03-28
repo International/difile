@@ -13,6 +13,7 @@ module.exports = Difile =
     @subscriptions.add atom.commands.add 'atom-workspace', 'difile:toggle': => @toggle()
     @subscriptions.add atom.commands.add 'atom-workspace', 'difile:difftool-toggle': => @diffToolToggle()
     @subscriptions.add atom.commands.add 'atom-workspace', 'difile:custom-diff-toggle': => @customDiffToggle()
+    @subscriptions.add atom.commands.add 'atom-workspace', 'difile:checkout-version-from-other-branch': => @checkoutOtherVersion()
 
   deactivate: ->
     @subscriptions.dispose()
@@ -27,6 +28,9 @@ module.exports = Difile =
     if diffOutputCb?
       br.onDiffOutput diffOutputCb
     br.display()
+
+  checkoutOtherVersion: ->
+    @showBranchView(@branchlistViewState, BranchListView.CHECKOUT_OTHER)
 
   diffToolToggle: ->
     @showBranchView(@branchlistViewState, BranchListView.DIFFTOOL)

@@ -10,6 +10,7 @@ class BranchListView extends SelectListView
   @DIFF = "diff"
   @DIFF_WITH_CUSTOM_VIEW = "diff_html_view"
   @DIFFTOOL = "difftool"
+  @CHECKOUT_OTHER = "checkout-other"
 
   constructor: (serializedState, compareMode = BranchListView.DIFF) ->
     previousSelection = serializedState?.previousSelection
@@ -29,6 +30,8 @@ class BranchListView extends SelectListView
         @compareCb = @runDiff
       when BranchListView.DIFFTOOL
         @compareCb = @runDiffTool
+      when BranchListView.CHECKOUT_OTHER
+        @compareCb = @runCheckout
 
   display: ->
     helpers.execFromCurrent "git branch", (err, stdout, stderr) =>
@@ -63,6 +66,14 @@ class BranchListView extends SelectListView
 
   viewForItem: (item) ->
     "<li>#{item}</li>"
+
+  runCheckout: (branch, currentFilePath) ->
+    helpers.execFromCurrent "git checkout #{branch} #{currentFilePath}", (err, stdout, stderr) =>
+      if err != null
+        throw err
+      else
+        window.alert "Done!"
+        @panel.hide()
 
   runDiff: (branch, currentFilePath) ->
     diffPath = Path.join(helpers.repoPath(), ".git/difile.diff")
