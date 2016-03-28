@@ -30,9 +30,12 @@ class BranchListView extends SelectListView
 
   display: ->
     helpers.execFromCurrent "git branch", (err, stdout, stderr) =>
+      splitOn = os.EOL
       if(err != null)
         throw err
-      lines = stdout.split(os.EOL).filter((l) -> l != "").map((l) -> l.substring(2))
+      if stdout.indexOf splitOn == -1
+        splitOn = "\n"
+      lines = stdout.split(splitOn).filter((l) -> l != "").map((l) -> l.substring(2))
       masterBranch = "master"
       haveMaster = false
       counter = 0
