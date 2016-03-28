@@ -1,11 +1,4 @@
 # See https://atom.io/docs/latest/hacking-atom-package-word-count#menus for more details
-'context-menu':
-  'atom-text-editor': [
-    {
-      'label': 'Toggle difile'
-      'command': 'difile:toggle'
-    }
-  ]
 'menu': [
   {
     'label': 'Packages'
@@ -13,14 +6,21 @@
       'label': 'difile'
       'submenu': [
         {
-          'label': 'Toggle'
+          'label': 'Difile: Compare with other branch'
           'command': 'difile:toggle'
         },
         {
-          'label': 'Branch List'
-          'command': 'difile:branch-list'
+          'label': 'Difile: Compare with other branch (difftool)'
+          'command': 'difile:difftool-toggle'
         },
-
+        {
+          'label': 'Difile: Compare with other branch ( HTML View )'
+          'command': 'difile:custom-diff-toggle'
+        },
+        {
+          'label': 'Difile: Checkout version from other branch'
+          'command': 'difile:checkout-version-from-other-branch'
+        },
       ]
     ]
   }

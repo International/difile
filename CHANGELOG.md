@@ -1,3 +1,6 @@
+## 0.3.4
+* added commands to pkg menu
+
 ## 0.3.3
 * added command to checkout version of another branch
 
