@@ -1,3 +1,6 @@
+## 0.3.1
+* fixes display of branch list on windows systems
+
 ## 0.3.0
 * added new view for html viewing of the diff, without git +/- markers
 
