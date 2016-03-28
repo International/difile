@@ -12,7 +12,9 @@ class BranchListView extends SelectListView
   @DIFFTOOL = "difftool"
 
   constructor: (serializedState, compareMode = BranchListView.DIFF) ->
+    previousSelection = serializedState?.previousSelection
     super
+    @filterEditorView.setText(previousSelection) if previousSelection?
     @setCompareMode compareMode
 
     @disposables = new CompositeDisposable
@@ -24,9 +26,9 @@ class BranchListView extends SelectListView
 
     switch @compareMode
       when BranchListView.DIFF, BranchListView.DIFF_WITH_CUSTOM_VIEW
-        @confirmedCb = @runDiff
+        @compareCb = @runDiff
       when BranchListView.DIFFTOOL
-        @confirmedCb = @runDiffTool
+        @compareCb = @runDiffTool
 
   display: ->
     helpers.execFromCurrent "git branch", (err, stdout, stderr) =>
@@ -103,4 +105,5 @@ class BranchListView extends SelectListView
 
   confirmed: (branchName) ->
     currentFilePath = helpers.currentFileProjectPath()
-    @confirmedCb(branchName, currentFilePath)
+    @confirmedCb?(branchName)
+    @compareCb(branchName, currentFilePath)

@@ -4,6 +4,7 @@ DiffTab = require "./diff-tab"
 
 module.exports = Difile =
   subscriptions: null
+  branchlistViewState: {previousSelection: null}
 
   activate: (state) ->
     # Events subscribed to in atom's system can be easily cleaned up with a CompositeDisposable
@@ -19,14 +20,20 @@ module.exports = Difile =
   serialize: ->
     difileViewState: {}
 
-  diffToolToggle: ->
-    new BranchListView({}, BranchListView.DIFFTOOL).display()
-
-  customDiffToggle: ->
-    br = new BranchListView({}, BranchListView.DIFF_WITH_CUSTOM_VIEW)
-    br.onDiffOutput (filePath, output) ->
-      atom.workspace.getActivePane().activateItem(new DiffTab("HTML Diff: #{filePath}",output))
+  showBranchView: (viewState, compareMode, diffOutputCb) ->
+    br = new BranchListView(viewState, compareMode)
+    br.onConfirmed (branchName) ->
+      viewState.previousSelection = branchName
+    if diffOutputCb?
+      br.onDiffOutput diffOutputCb
     br.display()
 
+  diffToolToggle: ->
+    @showBranchView(@branchlistViewState, BranchListView.DIFFTOOL)
+
+  customDiffToggle: ->
+    @showBranchView @branchlistViewState, BranchListView.DIFF_WITH_CUSTOM_VIEW, (filePath, output) ->
+      atom.workspace.getActivePane().activateItem(new DiffTab("HTML Diff: #{filePath}",output))
+
   toggle: ->
-    new BranchListView({}, BranchListView.DIFF).display()
+    @showBranchView(@branchlistViewState, BranchListView.DIFF)
