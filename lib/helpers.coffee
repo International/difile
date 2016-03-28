@@ -15,5 +15,8 @@ module.exports =
     fullFilePath = atom.workspace.getActiveTextEditor().getPath()
     fullFilePath.replace(repoPath, "").substring(1)
 
+  currentFileFullPath: ->
+    atom.workspace.getActiveTextEditor().getPath()
+
   execFromCurrent: (cmd, callback)->
     exec cmd, cwd: @repoPath(), callback

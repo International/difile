@@ -1,3 +1,6 @@
+## 0.3.3
+* added command to checkout version of another branch
+
 ## 0.3.2
 * remember previous selection
 
